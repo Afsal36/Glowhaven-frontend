@@ -1,0 +1,80 @@
+/* ================= PRODUCT CARD ================= */
+
+.product-item {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px;
+  transition: all 0.35s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.product-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.14);
+}
+
+/* ================= IMAGE ================= */
+
+.product-image {
+  width: 100%;
+  height: 320px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  background: #f4f4f4;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.product-item:hover .product-image img {
+  transform: scale(1.06);
+}
+
+/* ================= TAG ================= */
+
+.tag-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* ================= CONTENT ================= */
+
+.product-content {
+  padding: 14px 6px 6px;
+  text-align: center;
+}
+
+.product-content .title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #222;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+.product-content .price {
+  color: #d62b70;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-top: 4px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .product-image {
+    height: 260px;
+  }
+}

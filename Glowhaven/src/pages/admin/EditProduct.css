@@ -1,0 +1,29 @@
+.admin-edit-layout { display: flex; }
+.edit-container {
+  margin-left: 240px;
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
+}
+.form-control {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #dbdbdb;
+  border-radius: 6px;
+}
+.btn-update {
+  width: 100%;
+  background: #111;
+  color: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.preview-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+}

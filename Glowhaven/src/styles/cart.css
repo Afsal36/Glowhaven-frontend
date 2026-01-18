@@ -1,0 +1,29 @@
+.qty-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  width: 32px;
+  height: 32px;
+  font-weight: bold;
+  border-radius: 6px;
+}
+.qty-number {
+  min-width: 25px;
+  text-align: center;
+  font-weight: 600;
+}
+.cart-card:hover {
+  transform: translateY(-2px);
+  transition: 0.2s;
+}
+  .card {
+  transition: all 0.25s ease;
+}
+
+.qty-btn {
+  transition: transform 0.15s ease;
+}
+
+.qty-btn:active {
+  transform: scale(0.9);
+}

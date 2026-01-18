@@ -1,0 +1,151 @@
+/* =========================================
+   GLOBAL PAGE STYLING
+========================================= */
+:root {
+  --primary: #ff6fa0;
+  --dark: #222;
+  --light-text: #777;
+  --bg-soft: #fff7f8;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
+.about-hero-section {
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 100px 20px;
+  border-bottom: 4px solid rgba(255,111,160,0.4);
+}
+
+.about-title {
+  font-size: 3.3rem;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.about-subtitle {
+  font-size: 1.1rem;
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+/* =========================================
+   INTRO & DECOR
+========================================= */
+.about-description {
+  color: var(--light-text);
+  font-size: 1.1rem;
+  max-width: 700px;
+  line-height: 1.8;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* =========================================
+   MISSION IMAGE BLOCK
+========================================= */
+.about-img {
+  width: 100%;
+  border-radius: 18px;
+  transition: 0.4s ease;
+}
+
+.about-img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+/* =========================================
+   BRAND SECTION
+========================================= */
+.brand-section {
+  background: var(--bg-soft);
+  border-top: 1px solid #f1c7d4;
+  border-bottom: 1px solid #f1c7d4;
+}
+
+.brand-logo-wrapper {
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.brand-logo {
+  max-height: 60px;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.brand-logo-wrapper:hover .brand-logo {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: scale(1.12);
+}
+
+/* =========================================
+   TEAM CARDS
+========================================= */
+.team-card {
+  background: #fff;
+  padding: 18px;
+  border-radius: 16px;
+  transition: 0.35s ease;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+.team-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.team-img {
+  width: 100%;
+  border-radius: 14px;
+  transition: 0.35s;
+}
+
+.team-card:hover .team-img {
+  transform: scale(1.05);
+  filter: brightness(1.05);
+}
+
+/* Name / Role */
+.team-card h5 {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.team-card p {
+  font-size: 0.95rem;
+  color: var(--light-text);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 2.3rem;
+  }
+  .about-img {
+    margin-bottom: 20px;
+  }
+  .team-card {
+    margin-top: 15px;
+  }
+}

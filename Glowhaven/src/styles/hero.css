@@ -1,0 +1,263 @@
+/* ================= HERO ================= */
+
+.hero {
+  margin-top: 80px;
+}
+
+.hero-wrap {
+  height: 85vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 0 6%;
+}
+
+.hero-wrap1 {
+  background-image: url("/src/assets/hero-bg-1.webp");
+}
+
+.hero-wrap2 {
+  background-image: url("/src/assets/hero-bg-2.webp");
+}
+
+.hero-wrap3 {
+  background-image: url("/src/assets/hero-bg-3.webp");
+}
+
+.hero-content h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #243228;
+}
+
+.hero-content p {
+  color: #555;
+  font-size: 1.1rem;
+  margin: 12px 0 25px;
+}
+
+.hero-btn {
+  width: 200px;
+  padding: 14px;
+  border-radius: 10px;
+}
+
+/* ================= FAVOURITE / BANNER ================= */
+
+.favourite-beauty {
+  background: #fafafa;
+  border-radius: 10px;
+}
+
+.fav-banner {
+  height: 370px;
+  border-radius: 12px;
+  background-image: url("/src/assets/banner-female.webp");
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  border: 1px solid #eaeaea;
+}
+
+/* ================= PRODUCT CARD ================= */
+
+.product-link-wrapper {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-link-wrapper:hover {
+  color: inherit;
+  cursor: pointer;
+}
+
+.product-item {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.16);
+}
+
+/* IMAGE BOX */
+.product-image-box {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  background: #fafafa;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* IMAGES */
+.product-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.8s ease, transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.img-1 {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.img-2 {
+  opacity: 0;
+  transform: scale(1.06);
+}
+
+.product-image-box:hover .img-1 {
+  opacity: 0;
+  transform: scale(1.03);
+}
+
+.product-image-box:hover .img-2 {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* TEXT */
+.product-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 12px;
+  color: #212121;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #388e3c;
+}
+
+/* ================= DISCOVER ================= */
+
+.discover-box {
+  width: 100%;
+  height: 350px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.discover-img-1 {
+  background-image: url("/src/assets/discover-1.webp");
+}
+
+.discover-box:hover {
+  transform: translateY(-6px);
+}
+
+/* ================= SOCIAL ================= */
+
+.social-image-container {
+  max-width: 1300px;
+}
+
+.social-wrapper {
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.social-img-1 { background-image: url("/src/assets/social-image-1.jpg"); }
+.social-img-2 { background-image: url("/src/assets/social-image-2.jpg"); }
+.social-img-3 { background-image: url("/src/assets/social-image-3.jpg"); }
+.social-img-4 { background-image: url("/src/assets/social-image-4.jpg"); }
+.social-img-5 { background-image: url("/src/assets/social-image-5.jpg"); }
+.social-img-6 { background-image: url("/src/assets/social-image-1.jpg"); }
+
+.social-wrapper:hover {
+  transform: scale(1.05);
+  filter: brightness(0.85);
+}
+
+.insta-icon {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-size: 1.6rem;
+  color: #fff;
+}
+
+/* ===================================================== */
+/* ================= MOBILE OVERRIDES ================== */
+/* ===================================================== */
+
+@media (max-width: 576px) {
+
+  /* HERO */
+  .hero-wrap {
+    height: 70vh;
+    padding: 0 4%;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem;
+    line-height: 1.2;
+  }
+
+  .hero-content p {
+    font-size: 0.95rem;
+  }
+
+  .hero-btn {
+    width: 160px;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* PRODUCT CARD */
+  .product-item {
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+
+  .product-item:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+
+  .product-image-box {
+    height: 200px;
+  }
+
+  .product-img {
+    object-fit: cover;
+  }
+
+  .product-title {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .product-price {
+    font-size: 13px;
+  }
+
+  /* DISCOVER */
+  .discover-box {
+    height: 220px;
+  }
+}

@@ -1,0 +1,71 @@
+.orders-layout {
+  display: flex;
+  background: #f4f6fa;
+}
+
+.orders-content {
+  margin-left: 240px;
+  padding: 30px;
+  width: 100%;
+}
+
+.orders-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.no-orders {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Table Styling */
+.orders-table {
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  border-collapse: collapse;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+.orders-table thead {
+  background: #111;
+  color: #fff;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.orders-table tr:hover {
+  background: #f1f1f1;
+}
+
+/* Status Tags */
+.status-tag {
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.pending   { background: #ffe8a1; color: #7a5a0a; }
+.shipped   { background: #a8e5ff; color: #024b63; }
+.delivered { background: #b7ffb2; color: #035d19; }
+.cancelled { background: #ffb3b3; color: #7a0a0a; }
+
+/* Dropdown */
+.status-select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}

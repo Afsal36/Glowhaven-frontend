@@ -1,0 +1,165 @@
+/* ================= FOOTER BASE ================= */
+
+.footer {
+  background: #f8f8f8;
+  padding: 60px 0 40px;
+  color: #222;
+}
+
+.footer h3 {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.footer p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.footer ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.footer ul li {
+  margin-bottom: 8px;
+}
+
+.footer ul li a {
+  font-size: 15px;
+  color: #444;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer ul li a:hover {
+  margin-left: 8px;
+  color: var(--prim);
+}
+
+/* ================= SUBSCRIBE ================= */
+
+.footer input.form-control {
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+}
+
+.footer button.btn {
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-weight: 600;
+  background: #111;
+  color: #fff;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.footer button.btn:hover {
+  background: #000;
+}
+
+/* ================= FOOTER BOTTOM ================= */
+
+.footer-bottom {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 25px;
+}
+
+.footer-bottom p {
+  font-size: 14px;
+  color: #666;
+}
+
+.footer-bottom h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.footer-bottom img {
+  height: 25px;
+  object-fit: contain;
+}
+
+/* ================================================= */
+/* ================= MOBILE ONLY =================== */
+/* ================================================= */
+
+@media (max-width: 768px) {
+
+  .footer {
+    padding: 40px 0 25px;
+    text-align: center;
+  }
+
+  /* Headings */
+  .footer h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  /* Text */
+  .footer p {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  /* Links */
+  .footer ul li a {
+    font-size: 14px;
+  }
+
+  /* Disable slide hover on mobile */
+  .footer ul li a:hover {
+    margin-left: 0;
+  }
+
+  /* Subscribe stack */
+  .footer .d-flex {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer input.form-control {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .footer button.btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Footer bottom spacing */
+  .footer-bottom {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .footer-bottom h2 {
+    font-size: 18px;
+    margin: 12px 0;
+    letter-spacing: 1px;
+  }
+
+  .footer-bottom p {
+    font-size: 13px;
+  }
+
+  /* Payment icons */
+  .footer-bottom img {
+    height: 20px;
+  }
+
+  .footer-bottom .d-flex {
+    justify-content: center !important;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}

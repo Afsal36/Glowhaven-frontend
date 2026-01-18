@@ -1,0 +1,9 @@
+/* Default Normal Cursor */
+body, * {
+  cursor: default;
+}
+
+/* Clickable elements normal pointer */
+a, button, .btn {
+  cursor: pointer;
+}
