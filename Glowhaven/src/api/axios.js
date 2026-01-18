@@ -1,13 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: "https://glowhavena.onrender.com/api"
 });
-
-
 
 // 🔐 Attach token automatically (PRO WAY)
 api.interceptors.request.use(
