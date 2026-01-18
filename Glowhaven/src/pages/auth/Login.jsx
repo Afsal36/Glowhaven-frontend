@@ -8,7 +8,7 @@ import {
   resetPassword,
   clearAuthError,
 } from "../../features/auth/authSlice";
-import { Link, useNavigate } from "react-router"; // ✔ FIXED
+import { Link, useNavigate } from "react-router";
 
 function Login() {
   const dispatch = useDispatch();
@@ -25,13 +25,16 @@ function Login() {
   const [newPassword, setNewPassword] = useState("");
   const [showError, setShowError] = useState(false);
 
-  /* 🧹 Clear errors on page load */
+  // 🔁 RESEND OTP TIMER
+  const [resendTimer, setResendTimer] = useState(0);
+
+  /* 🧹 Clear errors */
   useEffect(() => {
     dispatch(clearAuthError());
-    return () => dispatch(clearAuthError()); // ✔ cleanup fix
+    return () => dispatch(clearAuthError());
   }, [dispatch]);
 
-  /* 🔁 If logged in → redirect */
+  /* 🔁 Redirect if logged in */
   useEffect(() => {
     if (user) navigate("/");
   }, [user, navigate]);
@@ -44,6 +47,17 @@ function Login() {
     }
   }, [error]);
 
+  /* ⏳ OTP RESEND COUNTDOWN */
+  useEffect(() => {
+    if (resendTimer === 0) return;
+
+    const interval = setInterval(() => {
+      setResendTimer((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [resendTimer]);
+
   /* ================= LOGIN ================= */
   const loginSubmit = (e) => {
     e.preventDefault();
@@ -51,53 +65,62 @@ function Login() {
     dispatch(loginUser({ email, password }));
   };
 
-  /* ================= FORGOT PW ================= */
+  /* ================= FORGOT PASSWORD ================= */
   const forgotSubmit = () => {
     if (!email) return alert("Enter email first!");
     dispatch(forgotPassword(email));
+    setResendTimer(30);
     setStep("otp");
   };
 
   /* ================= VERIFY OTP ================= */
   const otpSubmit = () => {
+    if (!otp) return alert("Enter OTP!");
     dispatch(verifyOtp({ email, otp }));
   };
 
+  /* ================= RESEND OTP ================= */
+  const resendOtp = () => {
+    if (resendTimer > 0) return;
+    dispatch(forgotPassword(email));
+    setResendTimer(30);
+  };
+
   /* ================= RESET PASSWORD ================= */
-const resetSubmit = async () => {
-  if (!newPassword) {
-    alert("Enter new password!");
-    return;
-  }
+  const resetSubmit = async () => {
+    if (!newPassword) return alert("Enter new password!");
 
-  const result = await dispatch(
-    resetPassword({ email, password: newPassword })
-  );
+    const result = await dispatch(
+      resetPassword({ email, password: newPassword })
+    );
 
-  if (result?.success) {
-    alert("Password updated! Please login now.");
-    setStep("login");
-  } else {
-    alert(result?.message || "Password reset failed");
-  }
-};
+    if (result?.success) {
+      alert("Password updated! Please login.");
+      setStep("login");
+    } else {
+      alert(result?.message || "Password reset failed");
+    }
+  };
 
-
-
-  /* 🔓 move to reset screen after OTP success */
+  /* 🔓 Move to reset screen after OTP success */
   useEffect(() => {
     if (otpVerified) setStep("reset");
   }, [otpVerified]);
 
   return (
     <div className="container d-flex justify-content-center align-items-center mt-5 pt-5">
-      <div className="card p-4 shadow-lg border-0" style={{ width: "430px", borderRadius: "14px" }}>
+      <div
+        className="card p-4 shadow-lg border-0"
+        style={{ width: "430px", borderRadius: "14px" }}
+      >
         <h3 className="fw-bold text-center mb-2">Welcome Back 👋</h3>
-        <p className="text-center text-muted mb-4">Login to continue shopping</p>
+        <p className="text-center text-muted mb-4">
+          Login to continue shopping
+        </p>
 
-        {/* ❌ ERROR MESSAGE */}
+        {/* ❌ ERROR */}
         {showError && (
-          <div className="alert alert-danger py-2 text-center" style={{ fontSize: "14px" }}>
+          <div className="alert alert-danger py-2 text-center">
             {error}
           </div>
         )}
@@ -125,13 +148,19 @@ const resetSubmit = async () => {
               {loading ? "Please wait..." : "Login"}
             </button>
 
-            <p className="text-primary text-center fw-semibold" style={{ cursor: "pointer" }} onClick={() => setStep("forgot")}>
+            <p
+              className="text-primary text-center fw-semibold"
+              style={{ cursor: "pointer" }}
+              onClick={() => setStep("forgot")}
+            >
               Forgot password?
             </p>
 
             <div className="text-center mt-2">
               <span>Don't have an account? </span>
-              <Link to="/register" className="fw-bold text-success">Sign Up</Link>
+              <Link to="/register" className="fw-bold text-success">
+                Sign Up
+              </Link>
             </div>
           </form>
         )}
@@ -139,7 +168,9 @@ const resetSubmit = async () => {
         {/* ================= FORGOT ================= */}
         {step === "forgot" && (
           <>
-            <h5 className="text-center mb-3 fw-semibold">Reset Your Password</h5>
+            <h5 className="text-center mb-3 fw-semibold">
+              Reset Your Password
+            </h5>
             <input
               className="form-control mb-3"
               placeholder="Enter your email"
@@ -149,7 +180,11 @@ const resetSubmit = async () => {
             <button className="btn btn-dark w-100" onClick={forgotSubmit}>
               Send OTP
             </button>
-            <p className="text-center mt-3 text-primary" style={{ cursor: "pointer" }} onClick={() => setStep("login")}>
+            <p
+              className="text-center mt-3 text-primary"
+              style={{ cursor: "pointer" }}
+              onClick={() => setStep("login")}
+            >
               Back to Login
             </p>
           </>
@@ -158,23 +193,54 @@ const resetSubmit = async () => {
         {/* ================= OTP ================= */}
         {step === "otp" && (
           <>
-            <h5 className="text-center mb-3 fw-semibold">Enter OTP</h5>
+            <h5 className="text-center mb-2 fw-semibold">Enter OTP</h5>
+            <p className="text-center text-muted mb-3" style={{ fontSize: "14px" }}>
+              OTP sent to <strong>{email}</strong>
+            </p>
+
             <input
               className="form-control mb-3"
               placeholder="Enter OTP"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
             />
-            <button className="btn btn-dark w-100" onClick={otpSubmit}>
+
+            <button className="btn btn-dark w-100 mb-2" onClick={otpSubmit}>
               Verify OTP
             </button>
+
+            <div className="text-center mt-2">
+              {resendTimer > 0 ? (
+                <span className="text-muted">
+                  Resend OTP in {resendTimer}s
+                </span>
+              ) : (
+                <span
+                  className="text-primary fw-semibold"
+                  style={{ cursor: "pointer" }}
+                  onClick={resendOtp}
+                >
+                  Resend OTP
+                </span>
+              )}
+            </div>
+
+            <p
+              className="text-center mt-3 text-secondary"
+              style={{ cursor: "pointer" }}
+              onClick={() => setStep("login")}
+            >
+              Back to Login
+            </p>
           </>
         )}
 
-        {/* ================= RESET PW ================= */}
+        {/* ================= RESET PASSWORD ================= */}
         {step === "reset" && (
           <>
-            <h5 className="text-center mb-3 fw-semibold">Create New Password</h5>
+            <h5 className="text-center mb-3 fw-semibold">
+              Create New Password
+            </h5>
             <input
               className="form-control mb-3"
               type="password"
