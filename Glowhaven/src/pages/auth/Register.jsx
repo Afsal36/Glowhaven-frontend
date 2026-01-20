@@ -19,29 +19,28 @@ function Register() {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
-  /* =========================
+  /* =====================
      CLEAR OLD ERRORS
-  ========================= */
+  ===================== */
   useEffect(() => {
     dispatch(clearAuthError());
     return () => dispatch(clearAuthError());
   }, [dispatch]);
 
-  /* =========================
-     VALIDATION RULES
-  ========================= */
+  /* =====================
+     VALIDATION
+  ===================== */
   const validate = (values) => {
     const errs = {};
 
-    // Name
     if (!values.name.trim()) {
       errs.name = "Full name is required";
-    } else if (values.name.length < 3) {
+    } else if (values.name.trim().length < 3) {
       errs.name = "Name must be at least 3 characters";
     }
 
-    // Email
     if (!values.email) {
       errs.email = "Email is required";
     } else if (
@@ -50,33 +49,32 @@ function Register() {
       errs.email = "Enter a valid email address";
     }
 
-    // Password
     if (!values.password) {
       errs.password = "Password is required";
     } else if (values.password.length < 6) {
-      errs.password = "Password must be at least 6 characters";
+      errs.password = "Minimum 6 characters required";
     } else if (!/[A-Z]/.test(values.password)) {
-      errs.password = "Password must contain one uppercase letter";
+      errs.password = "Add at least one uppercase letter";
     } else if (!/[0-9]/.test(values.password)) {
-      errs.password = "Password must contain one number";
+      errs.password = "Add at least one number";
     }
 
     return errs;
   };
 
-  /* =========================
+  /* =====================
      HANDLERS
-  ========================= */
-  const changeHandler = (e) => {
+  ===================== */
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const blurHandler = (e) => {
+  const handleBlur = (e) => {
     setTouched({ ...touched, [e.target.name]: true });
     setErrors(validate(form));
   };
 
-  const submitHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const validationErrors = validate(form);
@@ -92,9 +90,9 @@ function Register() {
     dispatch(registerUser(form));
   };
 
-  /* =========================
+  /* =====================
      REDIRECT ON SUCCESS
-  ========================= */
+  ===================== */
   useEffect(() => {
     if (user) navigate("/");
   }, [user, navigate]);
@@ -118,19 +116,17 @@ function Register() {
           </div>
         )}
 
-        <form onSubmit={submitHandler} noValidate>
+        <form onSubmit={handleSubmit} noValidate>
           {/* NAME */}
           <input
             className={`form-control mb-2 ${
-              touched.name && errors.name
-                ? "is-invalid"
-                : ""
+              touched.name && errors.name ? "is-invalid" : ""
             }`}
             name="name"
             placeholder="Full Name"
             value={form.name}
-            onChange={changeHandler}
-            onBlur={blurHandler}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
           {touched.name && errors.name && (
             <div className="invalid-feedback d-block">
@@ -141,16 +137,14 @@ function Register() {
           {/* EMAIL */}
           <input
             className={`form-control mb-2 ${
-              touched.email && errors.email
-                ? "is-invalid"
-                : ""
+              touched.email && errors.email ? "is-invalid" : ""
             }`}
             type="email"
             name="email"
             placeholder="Email Address"
             value={form.email}
-            onChange={changeHandler}
-            onBlur={blurHandler}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
           {touched.email && errors.email && (
             <div className="invalid-feedback d-block">
@@ -159,21 +153,39 @@ function Register() {
           )}
 
           {/* PASSWORD */}
-          <input
-            className={`form-control mb-3 ${
-              touched.password && errors.password
-                ? "is-invalid"
-                : ""
-            }`}
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={changeHandler}
-            onBlur={blurHandler}
-          />
+          <div className="position-relative mb-3">
+            <input
+              className={`form-control ${
+                touched.password && errors.password
+                  ? "is-invalid"
+                  : ""
+              }`}
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+
+            <button
+              type="button"
+              aria-label="Toggle password visibility"
+              onClick={() => setShowPassword((p) => !p)}
+              className="btn btn-sm btn-light position-absolute"
+              style={{
+                top: "50%",
+                right: "8px",
+                transform: "translateY(-50%)",
+                border: "none",
+              }}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+
           {touched.password && errors.password && (
-            <div className="invalid-feedback d-block">
+            <div className="invalid-feedback d-block mb-2">
               {errors.password}
             </div>
           )}
