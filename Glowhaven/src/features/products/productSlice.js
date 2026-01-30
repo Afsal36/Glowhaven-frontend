@@ -4,20 +4,16 @@ import api from "../../api/axios";
 /* ================= THUNKS (Manual Async) ================= */
 
 // FETCH ALL PRODUCTS
-// FETCH ALL PRODUCTS + SEARCH
 export const fetchProducts = (search = "") => async (dispatch) => {
-  // dispatch(startLoading());
+  dispatch(startLoading());   // 🔥 REQUIRED
   try {
-    const { data } = await api.get(
-      `/products?search=${search}`
-    );
+    const { data } = await api.get(`/products?search=${search}`);
     dispatch(setProducts(data));
   } catch (err) {
-    dispatch(
-      setError(err.response?.data?.message || "Failed to fetch products")
-    );
+    dispatch(setError(err.response?.data?.message || "Failed to fetch products"));
   }
 };
+
 
 
 // FETCH SINGLE PRODUCT

@@ -92,11 +92,12 @@ function Home() {
             Get the skin you want to feel
           </p>
 
-          {products.length === 0 ? (
-            <p className="text-center text-muted fs-5">
-              No products available...
-            </p>
-          ) : (
+       {loading ? (
+  <p className="text-center">Loading products...</p>
+) : products.length === 0 ? (
+  <p>No products available...</p>
+) : (
+
             <Swiper
               spaceBetween={20}
               modules={[Navigation]}
