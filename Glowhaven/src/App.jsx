@@ -57,6 +57,7 @@ function App() {
         {/* ---------- PUBLIC ---------- */}
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contact" element={<Contact />} />
@@ -83,15 +84,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/product/:id"
-          element={
-            <ProtectedRoute>
-              <ProductDetails />
-            </ProtectedRoute>
-          }
-        />
-
         <Route
           path="/checkout"
           element={

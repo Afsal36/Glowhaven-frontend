@@ -28,16 +28,10 @@ function Home() {
   const featuredProducts = products?.filter((p) => p.isFeatured);
 
   // 🔐 SHOP NAVIGATION WITH AUTH CHECK
-  const handleShopNavigation = () => {
-    const token = localStorage.getItem("token");
+ const handleShopNavigation = () => {
+  navigate("/shop");
+};
 
-    if (!token) {
-      toast.info("Please login to continue");
-      navigate("/login");
-    } else {
-      navigate("/shop");
-    }
-  };
 
   if (loading) {
     return <p className="text-center py-5">Loading...</p>;

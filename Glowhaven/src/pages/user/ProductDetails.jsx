@@ -1,4 +1,3 @@
-// src/pages/ProductDetails.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import api from "../../api/axios";
@@ -11,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function ProductDetails() {
   const { id } = useParams();
-  const navigate = useNavigate(); // ⭐ Buy Now Navigation
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
 
@@ -28,13 +27,23 @@ function ProductDetails() {
     loadProduct();
   }, [id]);
 
+  // 🔒 Auth Guard Function
+  const requireLogin = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.info("Please login to continue");
+      navigate("/login");
+      return false;
+    }
+    return true;
+  };
+
   if (!product) return <p className="text-center py-5">Loading...</p>;
 
   return (
     <div className="product-details-container">
       <div className="container ">
         <div className="row align-items-center">
-          {/* PRODUCT IMAGE */}
           {/* PRODUCT IMAGE */}
           <div className="col-md-6 text-center">
             <div className="product-details-image-box">
@@ -77,12 +86,12 @@ function ProductDetails() {
             </p>
 
             {/* BUTTONS */}
-            {/* BUTTONS */}
             <div className="d-flex gap-3 mt-4 flex-wrap">
               {/* 🛒 Add to Cart */}
               <button
                 className="btn btn-dark"
                 onClick={() => {
+                  if (!requireLogin()) return;
                   dispatch(addToCart({ productId: product._id, quantity: 1 }));
                   toast.success("Added to Cart 🛒");
                 }}
@@ -94,6 +103,7 @@ function ProductDetails() {
               <button
                 className="btn btn-outline-danger"
                 onClick={() => {
+                  if (!requireLogin()) return;
                   dispatch(addToWishlist(product._id));
                   toast.info("Added to Wishlist ❤️");
                 }}
@@ -115,6 +125,8 @@ function ProductDetails() {
                     return;
                   }
 
+                  if (!requireLogin()) return;
+
                   navigate("/checkout", {
                     state: {
                       buyNow: true,
@@ -129,11 +141,8 @@ function ProductDetails() {
           </div>
         </div>
       </div>
-       <ToastContainer
-        position="top-right"
-        autoClose={800}
-        theme="colored"
-      />
+
+      <ToastContainer position="top-right" autoClose={800} theme="colored" />
     </div>
   );
 }
