@@ -30,7 +30,6 @@ import About from "./pages/user/About";
 import Contact from "./pages/user/Contact";
 import AdminProducts from "./pages/admin/AdminProducts";
 import { ToastContainer } from "react-toastify";
-import ScrollToTop from "./pages/user/ScrollTop";
 import EditProduct from "./pages/admin/EditProduct";
 import Shipping from "./pages/user/Shipping";
 import Profile from "./pages/user/Profile";
@@ -38,6 +37,7 @@ import ShippingPolicy from "./pages/static/ShippingPolicy";
 import Terms from "./pages/static/Terms";
 import Privacy from "./pages/static/Privacy";
 import Loader from "./components/Loader.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,21 +57,19 @@ function App() {
   useEffect(() => {
     if (user) {
       setLoading(true);
-      Promise.all([
-        dispatch(fetchCart()),
-        dispatch(fetchWishlist())
-      ]).finally(() => setLoading(false));
+      Promise.all([dispatch(fetchCart()), dispatch(fetchWishlist())]).finally(
+        () => setLoading(false),
+      );
     }
   }, [dispatch, user]);
 
   return (
     <>
-      
-  {/* 🔥 SHOW ONLY WHEN LOADING */}
-
+      {/* 🔥 SHOW ONLY WHEN LOADING */}
+    <ScrollToTop/>
       <Nav />
-      <ScrollToTop />
-  <Loader visible={loading} />
+
+      <Loader visible={loading} />
       <Routes>
         {/* PUBLIC */}
         <Route path="/" element={<Home />} />
@@ -86,21 +84,112 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
 
         {/* USER */}
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-        <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
-        <Route path="/order/:id" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
-        <Route path="/shipping/:id" element={<ProtectedRoute><Shipping /></ProtectedRoute>} />
-        <Route path="/myorders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <ProtectedRoute>
+              <Wishlist />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/order/:id"
+          element={
+            <ProtectedRoute>
+              <OrderDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/shipping/:id"
+          element={
+            <ProtectedRoute>
+              <Shipping />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/myorders"
+          element={
+            <ProtectedRoute>
+              <MyOrders />
+            </ProtectedRoute>
+          }
+        />
 
         {/* ADMIN */}
-        <Route path="/admin/dashboard" element={<ProtectedRoute adminOnly><Dashboard /></ProtectedRoute>} />
-        <Route path="/admin/add-product" element={<ProtectedRoute adminOnly><AddProduct /></ProtectedRoute>} />
-        <Route path="/admin/orders" element={<ProtectedRoute adminOnly><Orders /></ProtectedRoute>} />
-        <Route path="/admin/products" element={<ProtectedRoute adminOnly><AdminProducts /></ProtectedRoute>} />
-        <Route path="/admin/edit-product/:id" element={<ProtectedRoute adminOnly><EditProduct /></ProtectedRoute>} />
-        <Route path="/admin/users" element={<ProtectedRoute adminOnly><Users /></ProtectedRoute>} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute adminOnly>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/add-product"
+          element={
+            <ProtectedRoute adminOnly>
+              <AddProduct />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/orders"
+          element={
+            <ProtectedRoute adminOnly>
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/products"
+          element={
+            <ProtectedRoute adminOnly>
+              <AdminProducts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/edit-product/:id"
+          element={
+            <ProtectedRoute adminOnly>
+              <EditProduct />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute adminOnly>
+              <Users />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       <ToastContainer position="top-right" autoClose={700} theme="colored" />

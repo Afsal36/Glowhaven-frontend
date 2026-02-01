@@ -29,14 +29,7 @@ function Home() {
 
   // 🔐 SHOP NAVIGATION WITH AUTH CHECK
   const handleShopNavigation = () => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      toast.info("Please login to continue");
-      navigate("/login");
-    } else {
-      navigate("/shop");
-    }
+    navigate("/shop")
   };
 
   if (loading) {
