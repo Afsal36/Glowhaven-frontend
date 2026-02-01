@@ -21,7 +21,7 @@ import "./styles/contact.css";
 import "./styles/responsive.css";
 import "./styles/footer.css";
 import './styles/about.css'
-import "./styles/ProductDetails.css";
+import "./styles/productDetails.css";
 import './styles/cart.css'
 import "./styles/orderDetails.css"
 import './styles/profile.css'
