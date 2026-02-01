@@ -28,10 +28,16 @@ function Home() {
   const featuredProducts = products?.filter((p) => p.isFeatured);
 
   // 🔐 SHOP NAVIGATION WITH AUTH CHECK
- const handleShopNavigation = () => {
-  navigate("/shop");
-};
+  const handleShopNavigation = () => {
+    const token = localStorage.getItem("token");
 
+    if (!token) {
+      toast.info("Please login to continue");
+      navigate("/login");
+    } else {
+      navigate("/shop");
+    }
+  };
 
   if (loading) {
     return <p className="text-center py-5">Loading...</p>;
@@ -86,12 +92,11 @@ function Home() {
             Get the skin you want to feel
           </p>
 
-       {loading ? (
-  <p className="text-center">Loading products...</p>
-) : products.length === 0 ? (
-  <p>No products available...</p>
-) : (
-
+          {products.length === 0 ? (
+            <p className="text-center text-muted fs-5">
+              No products available...
+            </p>
+          ) : (
             <Swiper
               spaceBetween={20}
               modules={[Navigation]}
