@@ -111,33 +111,32 @@ function Home() {
                 ? featuredProducts
                 : products
               ).map((product) => (
-                <SwiperSlide key={product._id}>
-                  <div className="product-item">
-                    <div className="product-image-box">
-                      <img
-                        src={product.image || "/placeholder.jpg"}
-                        alt={product.name}
-                        className="product-img img-1"
-                      />
+               <SwiperSlide key={product._id}>
+  <Link
+    to={`/product/${product._id}`}
+    className="product-item text-decoration-none text-dark"
+  >
+    <div className="product-image-box">
+      <img
+        src={product.image || "/placeholder.jpg"}
+        alt={product.name}
+        className="product-img img-1"
+      />
 
-                      {product.secondImage && (
-                        <img
-                          src={product.secondImage}
-                          alt={product.name}
-                          className="product-img img-2"
-                        />
-                      )}
-                    </div>
+      {product.secondImage && (
+        <img
+          src={product.secondImage}
+          alt={product.name}
+          className="product-img img-2"
+        />
+      )}
+    </div>
 
-                    <Link
-                      to={`/product/${product._id}`}
-                      className="product-link-wrapper"
-                    >
-                      <h4 className="product-title">{product.name}</h4>
-                      <p className="product-price">₹ {product.price}</p>
-                    </Link>
-                  </div>
-                </SwiperSlide>
+    <h4 className="product-title">{product.name}</h4>
+    <p className="product-price">₹ {product.price}</p>
+  </Link>
+</SwiperSlide>
+
               ))}
             </Swiper>
           )}
