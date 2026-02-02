@@ -1,5 +1,8 @@
 import axios from "axios";
 
+console.log("ENV URL =", import.meta.env.VITE_API_URL);
+
+
 export const startLoader = () =>
   window.dispatchEvent(new Event("start-loading"));
 
@@ -7,7 +10,7 @@ export const stopLoader = () =>
   window.dispatchEvent(new Event("stop-loading"));
 
 const api = axios.create({
-  baseURL:  `${import.meta.env.VITE_API_BASE_URL}`,
+  baseURL:  `${import.meta.env.VITE_API_URL}`,
 });
 
 // 🔹 REQUEST INTERCEPTOR
