@@ -7,12 +7,11 @@ import "swiper/css/navigation";
 
 import { useNavigate, Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { fetchProducts } from "../../features/products/productSlice";
-// import { addToCart } from "../../features/cart/cartSlice";
-// import { addToWishlist } from "../../features/wishlist/wishlistSlice";
+import Loader from "../../components/Loader";
 
 function Home() {
   const dispatch = useDispatch();
@@ -20,25 +19,17 @@ function Home() {
 
   const { products, loading } = useSelector((state) => state.products);
 
-  // 🚀 Fetch products
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
   const featuredProducts = products?.filter((p) => p.isFeatured);
 
-  // 🔐 SHOP NAVIGATION WITH AUTH CHECK
-  const handleShopNavigation = () => {
-    navigate("/shop")
-  };
-
-  if (loading) {
-    return <p className="text-center py-5">Loading...</p>;
-  }
+  const handleShopNavigation = () => navigate("/shop");
 
   return (
     <>
-      {/* ====================== HERO ====================== */}
+      {/* HERO */}
       <div className="hero">
         <Swiper
           slidesPerView={1}
@@ -75,7 +66,7 @@ function Home() {
         </Swiper>
       </div>
 
-      {/* ====================== FEATURED PRODUCTS ====================== */}
+      {/* PRODUCTS */}
       <div className="product-container py-5 my-5">
         <div className="container">
           <h2 className="text-center fw-semibold fs-1 mb-4">
@@ -85,11 +76,15 @@ function Home() {
             Get the skin you want to feel
           </p>
 
-          {products.length === 0 ? (
+          {loading && <Loader visible={true} />}
+
+          {!loading && products.length === 0 && (
             <p className="text-center text-muted fs-5">
               No products available...
             </p>
-          ) : (
+          )}
+
+          {!loading && products.length > 0 && (
             <Swiper
               spaceBetween={20}
               modules={[Navigation]}
@@ -104,37 +99,35 @@ function Home() {
                 ? featuredProducts
                 : products
               ).map((product) => (
-               <SwiperSlide key={product._id}>
-  <Link
-    to={`/product/${product._id}`}
-    className="product-item text-decoration-none text-dark"
-  >
-    <div className="product-image-box">
-      <img
-        src={product.image || "/placeholder.jpg"}
-        alt={product.name}
-        className="product-img img-1"
-      />
-
-      {product.secondImage && (
-        <img
-          src={product.secondImage}
-          alt={product.name}
-          className="product-img img-2"
-        />
-      )}
-    </div>
-
-    <h4 className="product-title">{product.name}</h4>
-    <p className="product-price">₹ {product.price}</p>
-  </Link>
-</SwiperSlide>
-
+                <SwiperSlide key={product._id}>
+                  <Link
+                    to={`/product/${product._id}`}
+                    className="product-item text-decoration-none text-dark"
+                  >
+                    <div className="product-image-box">
+                      <img
+                        src={product.image || "/placeholder.jpg"}
+                        alt={product.name}
+                        className="product-img img-1"
+                        loading="lazy"
+                      />
+                      {product.secondImage && (
+                        <img
+                          src={product.secondImage}
+                          alt={product.name}
+                          className="product-img img-2"
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+                    <h4 className="product-title">{product.name}</h4>
+                    <p className="product-price">₹ {product.price}</p>
+                  </Link>
+                </SwiperSlide>
               ))}
             </Swiper>
           )}
 
-          {/* VIEW ALL */}
           <div className="text-center mt-4">
             <button
               onClick={handleShopNavigation}
@@ -146,7 +139,7 @@ function Home() {
         </div>
       </div>
 
-      {/* ====================== DISCOVER ====================== */}
+      {/* DISCOVER */}
       <section className="discover container py-5">
         <div className="text-center mb-5">
           <h2 className="fw-semibold fs-1">More to Discover</h2>
@@ -166,11 +159,8 @@ function Home() {
           </div>
         </div>
       </section>
- <ToastContainer
-        position="top-right"
-        autoClose={800}
-        theme="colored"
-      />
+
+      <ToastContainer position="top-right" autoClose={800} theme="colored" />
     </>
   );
 }
