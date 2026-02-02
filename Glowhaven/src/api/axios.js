@@ -7,7 +7,7 @@ export const stopLoader = () =>
   window.dispatchEvent(new Event("stop-loading"));
 
 const api = axios.create({
-  baseURL:  `${import.meta.env.VITE_API_BASE_URL}/api`,
+  baseURL:  `${import.meta.env.VITE_API_BASE_URL}`,
 });
 
 // 🔹 REQUEST INTERCEPTOR
