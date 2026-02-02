@@ -7,7 +7,7 @@ export const stopLoader = () =>
   window.dispatchEvent(new Event("stop-loading"));
 
 const api = axios.create({
-  baseURL: "https://glowhavena.onrender.com/api",
+  baseURL:  `${import.meta.env.VITE_API_BASE_URL}/api`,
 });
 
 // 🔹 REQUEST INTERCEPTOR
