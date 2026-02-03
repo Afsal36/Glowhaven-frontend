@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,21 +9,39 @@ import { addToCart } from "../../features/cart/cartSlice";
 import { addToWishlist } from "../../features/wishlist/wishlistSlice";
 
 function Shop() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.products);
 
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [filterSortOption, setFilterSortOption] = useState("all");
 
-  // ✅ Debounced backend search
+  // 🔥 Listen for URL changes from Navbar search
+  useEffect(() => {
+    const handleURLChange = () => {
+      const params = new URLSearchParams(window.location.search);
+      const urlSearch = params.get("search") || "";
+      setSearch(urlSearch);
+      setDebouncedSearch(urlSearch);
+    };
+
+    handleURLChange();
+    window.addEventListener("popstate", handleURLChange);
+    return () => window.removeEventListener("popstate", handleURLChange);
+  }, []);
+
+  // ⏳ Debounce typing
   useEffect(() => {
     const timer = setTimeout(() => {
-      dispatch(fetchProducts(search));
+      setDebouncedSearch(search);
     }, 400);
-
     return () => clearTimeout(timer);
-  }, [search, dispatch]);
+  }, [search]);
+
+  // 📦 Fetch products
+  useEffect(() => {
+    dispatch(fetchProducts(debouncedSearch));
+  }, [dispatch, debouncedSearch]);
 
   const handleFilterSort = () => {
     let filtered = [...products];
@@ -46,7 +64,6 @@ function Shop() {
     const token = localStorage.getItem("token");
     if (!token) {
       toast.info("Please login to continue");
-      navigate("/login");
       return false;
     }
     return true;
@@ -77,7 +94,7 @@ function Shop() {
             <input
               type="text"
               className="form-control w-50"
-              placeholder="Search for products, brands and more..."
+              placeholder="Search products..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -103,21 +120,25 @@ function Shop() {
             </select>
           </div>
 
+          {!loading && displayedProducts.length === 0 && (
+            <p className="text-center text-muted">No products found</p>
+          )}
+
+          {/* PRODUCTS */}
           <div className="row">
             {displayedProducts.map((product) => (
               <div className="col-md-3 mb-4" key={product._id}>
                 <div className="product-item text-center position-relative">
                   <div className="product-image w-100 position-relative overflow-hidden">
                     <img src={product.image} className="img-fluid" alt={product.name} />
+
                     <div className="product-icons gap-3">
                       <div className="product-icon" onClick={() => handleWishlist(product)}>
                         <i className="bi bi-heart fs-5"></i>
                       </div>
+
                       <div className="product-icon" onClick={() => handleCart(product)}>
                         <i className="bi bi-cart3 fs-5"></i>
-                      </div>
-                      <div className="product-icon" onClick={() => navigate(`/product/${product._id}`)}>
-                        <i className="bi bi-eye fs-5"></i>
                       </div>
                     </div>
                   </div>
