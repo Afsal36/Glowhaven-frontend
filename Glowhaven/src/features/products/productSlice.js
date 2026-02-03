@@ -1,20 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "../../api/axios";
 
-/* ================= THUNKS (Manual Async) ================= */
+/* ================= THUNKS ================= */
 
-// FETCH ALL PRODUCTS
+// FETCH ALL PRODUCTS (WITH SAFE SEARCH)
 export const fetchProducts = (search = "") => async (dispatch) => {
-  dispatch(startLoading());   // 🔥 REQUIRED
+  dispatch(startLoading());
   try {
-    const { data } = await api.get(`/products?search=${search}`);
+    const { data } = await api.get(
+      `/products?search=${encodeURIComponent(search)}`
+    );
     dispatch(setProducts(data));
   } catch (err) {
     dispatch(setError(err.response?.data?.message || "Failed to fetch products"));
   }
 };
-
-
 
 // FETCH SINGLE PRODUCT
 export const fetchSingleProduct = (id) => async (dispatch) => {
@@ -26,8 +26,6 @@ export const fetchSingleProduct = (id) => async (dispatch) => {
     dispatch(setError(err.response?.data?.message || "Failed to fetch product"));
   }
 };
-
-
 
 /* ================= SLICE ================= */
 
@@ -58,7 +56,7 @@ const productSlice = createSlice({
       state.error = action.payload;
     },
     clearProduct: (state) => {
-      state.product = null; // reset single product view
+      state.product = null;
     },
   },
 });
