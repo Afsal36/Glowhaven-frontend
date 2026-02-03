@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router"; // ✅ FIXED
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,9 +28,13 @@ function Shop() {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
     }, 400);
-
     return () => clearTimeout(timer);
   }, [search]);
+
+  // 🔄 UPDATE URL WITHOUT REFRESH
+  useEffect(() => {
+    navigate(`?search=${debouncedSearch}`, { replace: true });
+  }, [debouncedSearch, navigate]);
 
   // 📦 FETCH PRODUCTS
   useEffect(() => {
@@ -69,7 +73,6 @@ function Shop() {
   // ❤️ WISHLIST
   const handleWishlist = (product) => {
     if (!requireAuth()) return;
-
     dispatch(addToWishlist(product._id));
     toast.success(`${product.name} added to wishlist ❤️`);
   };
@@ -77,7 +80,6 @@ function Shop() {
   // 🛒 CART
   const handleCart = (product) => {
     if (!requireAuth()) return;
-
     dispatch(addToCart({ productId: product._id, quantity: 1 }));
     toast.info(`${product.name} added to cart 🛒`);
   };
@@ -88,7 +90,6 @@ function Shop() {
 
   return (
     <>
-      {/* BREADCRUMB */}
       <ol className="section-banner py-3 position-relative">
         <li className="position-relative">
           <Link to="/">Home</Link>
@@ -133,7 +134,6 @@ function Shop() {
             </select>
           </div>
 
-          {/* NO RESULT */}
           {!loading && displayedProducts.length === 0 && (
             <p className="text-center text-muted">No products found</p>
           )}
@@ -176,9 +176,7 @@ function Shop() {
 
                       <div
                         className="product-icon"
-                        onClick={() =>
-                          navigate(`/product/${product._id}`)
-                        }
+                        onClick={() => navigate(`/product/${product._id}`)}
                       >
                         <i className="bi bi-eye fs-5"></i>
                       </div>
@@ -207,11 +205,7 @@ function Shop() {
         </div>
       </div>
 
-      <ToastContainer
-             position="top-right"
-             autoClose={800}
-             theme="colored"
-           />
+      <ToastContainer position="top-right" autoClose={800} theme="colored" />
     </>
   );
 }
